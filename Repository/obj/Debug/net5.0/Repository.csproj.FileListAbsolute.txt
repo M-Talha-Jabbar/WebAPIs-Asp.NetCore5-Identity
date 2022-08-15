@@ -1,0 +1,15 @@
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\bin\Debug\net5.0\Repository.deps.json
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\bin\Debug\net5.0\Repository.runtimeconfig.json
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\bin\Debug\net5.0\Repository.runtimeconfig.dev.json
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\bin\Debug\net5.0\Repository.dll
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\bin\Debug\net5.0\Repository.pdb
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\Repository.csproj.AssemblyReference.cache
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\Repository.AssemblyInfoInputs.cache
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\Repository.AssemblyInfo.cs
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\Repository.csproj.CoreCompileInputs.cache
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\Repository.dll
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\refint\Repository.dll
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\Repository.pdb
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\Repository.genruntimeconfig.cache
+D:\WebAPIs-Asp.NetCore5-Identity\Repository\obj\Debug\net5.0\ref\Repository.dll

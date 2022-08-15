@@ -1,0 +1,15 @@
+D:\WebAPIs-Asp.NetCore5-Identity\Service\bin\Debug\net5.0\Service.deps.json
+D:\WebAPIs-Asp.NetCore5-Identity\Service\bin\Debug\net5.0\Service.dll
+D:\WebAPIs-Asp.NetCore5-Identity\Service\bin\Debug\net5.0\Service.pdb
+D:\WebAPIs-Asp.NetCore5-Identity\Service\bin\Debug\net5.0\Repository.dll
+D:\WebAPIs-Asp.NetCore5-Identity\Service\bin\Debug\net5.0\Repository.pdb
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\Service.csproj.AssemblyReference.cache
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\Service.AssemblyInfoInputs.cache
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\Service.AssemblyInfo.cs
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\Service.csproj.CoreCompileInputs.cache
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\Service.csproj.CopyComplete
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\Service.dll
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\refint\Service.dll
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\Service.pdb
+D:\WebAPIs-Asp.NetCore5-Identity\Service\obj\Debug\net5.0\ref\Service.dll
