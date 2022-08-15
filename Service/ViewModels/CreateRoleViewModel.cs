@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Service.ViewModels
 {
-    public class LoginRequest
+    public class RoleViewModel
     {
-        [Required][MaxLength(20)] public string Username { get; set; }
-        [Required] public string Password { get; set; }
+        [Required] public string RoleName { get; set; }
     }
 }

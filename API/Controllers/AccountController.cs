@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Repository.Identity;
 using Service.ViewModels;
 using System.Threading.Tasks;
 
@@ -10,21 +11,22 @@ namespace API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromForm]RegisterRequest model)
+        public async Task<IActionResult> Register([FromForm]RegisterViewModel model)
         {
-            var user = new IdentityUser
+            var user = new ApplicationUser()
             {
                 UserName = model.UserName,
-                Email = model.Email
+                Email = model.Email,
+                City = model.City,
             };
 
             // Store user data in AspNetUsers database table
@@ -44,7 +46,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromForm]LoginRequest model)
+        public async Task<IActionResult> Login([FromForm]LoginViewModel model)
         {
             var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, isPersistent: false, false);
 

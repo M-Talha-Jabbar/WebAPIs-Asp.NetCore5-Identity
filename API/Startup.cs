@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Repository.Data;
+using Repository.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace API
             );
 
             // configuring ASP.NET Core Identity
-            services.AddIdentity<IdentityUser, IdentityRole>(options => // We are using the IdentityOptions object to configure PasswordOptions.
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => // We are using the IdentityOptions object to configure PasswordOptions.
             {
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
