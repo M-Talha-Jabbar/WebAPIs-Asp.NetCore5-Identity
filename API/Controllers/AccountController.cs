@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Identity;
@@ -19,13 +20,14 @@ namespace API.Controllers
             this.signInManager = signInManager;
         }
 
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromForm]RegisterViewModel model)
         {
             var user = new ApplicationUser()
             {
-                UserName = model.UserName,
-                Email = model.Email,
+                UserName = model.UserName, // In AspNetUsers table Username is UNIQUE.
+                Email = model.Email, // In AspNetUsers table Email is NOT Unique.
                 City = model.City,
             };
 
@@ -35,6 +37,13 @@ namespace API.Controllers
             // If user is successfully created, sign-in the user using SignInManager
             if (result.Succeeded)
             {
+                // But If the user is signed in and in the Admin role, then it is the Admin user that is creating a new user. So redirecting the Admin user to ListUsers action method in Administrator controller.
+                // 'User' contains ClaimsPrincipal of the current user of the application.
+                if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("ListUsers", "Administrator");
+                }
+
                 await signInManager.SignInAsync(user, isPersistent: false);
                 // isPersistent is used to specify whether we want to create session cookie or persistent cookie.
                 // Here we are creating a session cookie (A session cookie is immediately lost when we close the browser window (Note: When all windows of a browser will be closed)).
@@ -45,6 +54,7 @@ namespace API.Controllers
             return BadRequest(result.Errors);
         }
 
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromForm]LoginViewModel model)
         {

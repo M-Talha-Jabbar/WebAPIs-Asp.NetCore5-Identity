@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.ViewModels
 {
-    public class RoleViewModel
+    public class CreateDeleteRoleViewModel
     {
         [Required] public string RoleName { get; set; }
     }
