@@ -1,5 +1,9 @@
+using API.Authorization.Handlers;
+using API.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +49,13 @@ namespace API
             // We could also use this IdentityOptions object to configure: UserOptions, SignInOptions, LockoutOptions, TokenOptions, StoreOptions, ClaimsIdentityOptions.
 
             services.AddControllers();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = new PathString("/api/Administrator/AccessDenied");
+            });
+
+            services.AddIdentityServices();
 
             services.AddSwaggerGen(c =>
             {

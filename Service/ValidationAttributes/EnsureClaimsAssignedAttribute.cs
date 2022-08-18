@@ -17,7 +17,7 @@ namespace Service.ValidationAttributes
 
             foreach(var item in list)
             {
-                if(!ClaimStore.AllClaims.Any(c => c.Type == item))
+                if(item == null || !ClaimStore.AllClaims.Any(c => c.Type.ToUpper() == item.ToUpper())) // we have make use of ToUpper() to make this claim checking case in-sensitive.
                 {
                     return false;
                 }

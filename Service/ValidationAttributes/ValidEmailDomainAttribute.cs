@@ -19,7 +19,7 @@ namespace Service.ValidationAttributes
         public override bool IsValid(object value)
         {
             string[] strings = value.ToString().Split('@');
-            return strings[1].ToUpper() == allowedDomain.ToUpper(); // we have make use of ToUpper() to make this email domain checking case insensitive.
+            return strings[1].ToUpper() == allowedDomain.ToUpper(); // we have make use of ToUpper() to make this email domain checking case in-sensitive.
         }
     }
 

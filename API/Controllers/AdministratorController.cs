@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using API.Authorization.Requirements;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,18 +12,20 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdministratorController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IAuthorizationService authorizationService;
 
-        public AdministratorController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AdministratorController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IAuthorizationService authorizationService)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.authorizationService = authorizationService;
         }
 
         [HttpGet("Role")]
@@ -33,6 +36,7 @@ namespace API.Controllers
             return Ok(roles);
         }
 
+        [Authorize(Policy = "CreateRolePolicy")]
         [HttpPost("Role")]
         public async Task<IActionResult> CreateRole([FromForm]CreateDeleteRoleViewModel model)
         {
@@ -51,6 +55,7 @@ namespace API.Controllers
             return BadRequest(result.Errors);
         }
 
+        [Authorize(Policy = "EditRolePolicy")]
         [HttpPatch("Role")]
         public async Task<IActionResult> EditRole([FromForm]EditRoleViewModel model)
         {
@@ -73,8 +78,9 @@ namespace API.Controllers
             return BadRequest(result.Errors);
         }
 
+        [Authorize(Policy = "DeleteRolePolicy")]
         [HttpDelete("Role")]
-        public async Task<IActionResult> DeleteUser([Required][FromForm]CreateDeleteRoleViewModel model)
+        public async Task<IActionResult> DeleteRole([Required][FromForm]CreateDeleteRoleViewModel model)
         {
             var role = await roleManager.FindByNameAsync(model.RoleName);
 
@@ -113,31 +119,43 @@ namespace API.Controllers
             return Ok(users);
         }
 
+        //[Authorize(Policy = "AssignRolePolicy")]
+        [Authorize]
         [HttpPost("User/Role")]
         public async Task<IActionResult> AssignRoleToAUser([FromForm]UserRoleViewModel model)
         {
-            var roleExists = await roleManager.RoleExistsAsync(model.RoleName);
+            var requirement = new AssignRolesRequirement();
+            var resource = model;
+            var authorizationResult = await authorizationService.AuthorizeAsync(User, resource, requirement);
 
-            if (!roleExists)
+            if (authorizationResult.Succeeded)
             {
-                return Ok($"Role {model.RoleName} doesn't exist");
-            }
 
-            var user = await userManager.FindByNameAsync(model.Username);
+                var roleExists = await roleManager.RoleExistsAsync(model.RoleName);
 
-            if (user != null)
-            {
-                var result = await userManager.AddToRoleAsync(user, model.RoleName);
-
-                if (result.Succeeded)
+                if (!roleExists)
                 {
-                    return Ok($"User {model.Username} added to role {model.RoleName}");
+                    return Ok($"Role {model.RoleName} doesn't exist");
                 }
 
-                return BadRequest(result.Errors);
+                var user = await userManager.FindByNameAsync(model.Username);
+
+                if (user != null)
+                {
+                    var result = await userManager.AddToRoleAsync(user, model.RoleName);
+
+                    if (result.Succeeded)
+                    {
+                        return Ok($"User {model.Username} added to role {model.RoleName}");
+                    }
+
+                    return BadRequest(result.Errors);
+                }
+
+                return BadRequest($"User {model.Username} doesn't exist");
             }
 
-            return BadRequest($"User {model.Username} doesn't exist");
+            return Forbid();
         }
 
         [HttpDelete("User/Roles")]
@@ -178,17 +196,17 @@ namespace API.Controllers
 
                 foreach(var claimType in model.claims)
                 {
-                    if(userClaims.Any(c => c.Type == claimType))
+                    if(userClaims.Any(c => c.Type == claimType.ToUpper()))
                     {
-                        return BadRequest($"Claim ${claimType} is already assigned to user ${model.UserName}");
+                        return BadRequest($"Claim {claimType.ToUpper()} is already assigned to user {model.UserName}");
                     }
                 }
 
-                var result = await userManager.AddClaimsAsync(user, model.claims.Select(c => new Claim(c, ClaimStore.AllClaims.Find().ToList());
+                var result = await userManager.AddClaimsAsync(user, model.claims.Select(c => new Claim(c.ToUpper(), c.ToUpper())).ToList());
 
                 if (result.Succeeded)
                 {
-                    return Ok("All Claims added");
+                    return Ok("Claims added");
                 }
 
                 return BadRequest(result.Errors);
@@ -224,6 +242,13 @@ namespace API.Controllers
             }
 
             return BadRequest($"User {userName} doesn't exist");
+        }
+
+        [AllowAnonymous]
+        [HttpGet("AccessDenied")]
+        public IActionResult AccessDenied()
+        {
+            return BadRequest("Access Denied");
         }
     }
 }
