@@ -119,43 +119,32 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        //[Authorize(Policy = "AssignRolePolicy")]
-        [Authorize]
+        [Authorize(Policy = "AssignRolePolicy")]
         [HttpPost("User/Role")]
         public async Task<IActionResult> AssignRoleToAUser([FromForm]UserRoleViewModel model)
         {
-            var requirement = new AssignRolesRequirement();
-            var resource = model;
-            var authorizationResult = await authorizationService.AuthorizeAsync(User, resource, requirement);
+            var roleExists = await roleManager.RoleExistsAsync(model.RoleName);
 
-            if (authorizationResult.Succeeded)
+            if (!roleExists)
             {
-
-                var roleExists = await roleManager.RoleExistsAsync(model.RoleName);
-
-                if (!roleExists)
-                {
-                    return Ok($"Role {model.RoleName} doesn't exist");
-                }
-
-                var user = await userManager.FindByNameAsync(model.Username);
-
-                if (user != null)
-                {
-                    var result = await userManager.AddToRoleAsync(user, model.RoleName);
-
-                    if (result.Succeeded)
-                    {
-                        return Ok($"User {model.Username} added to role {model.RoleName}");
-                    }
-
-                    return BadRequest(result.Errors);
-                }
-
-                return BadRequest($"User {model.Username} doesn't exist");
+                return Ok($"Role {model.RoleName} doesn't exist");
             }
 
-            return Forbid();
+            var user = await userManager.FindByNameAsync(model.Username);
+
+            if (user != null)
+            {
+                var result = await userManager.AddToRoleAsync(user, model.RoleName);
+
+                if (result.Succeeded)
+                {
+                    return Ok($"User {model.Username} added to role {model.RoleName}");
+                }
+
+                return BadRequest(result.Errors);
+            }
+
+            return BadRequest($"User {model.Username} doesn't exist");
         }
 
         [HttpDelete("User/Roles")]

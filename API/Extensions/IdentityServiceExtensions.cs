@@ -17,7 +17,7 @@ namespace API.Extensions
                     {
                         return (context.User.IsInRole("Admin") && context.User.HasClaim(c => c.Type == "CREATE ROLE")) || context.User.IsInRole("Super Admin");
                     });
-                }); // ClaimType comparison is case in-sensitive where as ClaimValue comparison is case sensitive.
+                }); 
 
                 options.AddPolicy("EditRolePolicy", policy =>
                 {
@@ -42,7 +42,9 @@ namespace API.Extensions
             });
 
 
+            // Registering the Handlers
             services.AddScoped<IAuthorizationHandler, CanAssignRolesToOnlyOtherUsersHandler>();
+            services.AddScoped<IAuthorizationHandler, IsSuperAdminHandler>();
 
 
             return services;
