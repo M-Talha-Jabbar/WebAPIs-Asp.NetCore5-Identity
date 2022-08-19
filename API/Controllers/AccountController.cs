@@ -37,6 +37,10 @@ namespace API.Controllers
             // If user is successfully created, sign-in the user using SignInManager
             if (result.Succeeded)
             {
+                var emailConfirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, emailConfirmationToken = emailConfirmationToken }, Request.Scheme);
+
                 // But If the user is signed in and in the Admin role, then it is the Admin user that is creating a new user. So redirecting the Admin user to ListUsers action method in Administrator controller.
                 // 'User' contains ClaimsPrincipal of the current user of the application.
                 if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
@@ -65,6 +69,11 @@ namespace API.Controllers
                 return Ok("Logged In");
             }
 
+            if (result.IsNotAllowed)
+            {
+                return BadRequest("Email not confirmed yet");
+            }
+
             return BadRequest("Invalid Login Attempt");
         }
 
@@ -74,6 +83,32 @@ namespace API.Controllers
             await signInManager.SignOutAsync(); // sign out the user by removing the session cookie from the user's browser
 
             return Ok("You have been Logged Out!!");
+        }
+
+        [AllowAnonymous]
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string userId, string emailConfirmationToken)
+        {
+            if(userId == null || emailConfirmationToken == null)
+            {
+                return BadRequest("Something went wrong");
+            }
+
+            var user = await userManager.FindByIdAsync(userId);
+
+            if(user == null)
+            {
+                return BadRequest($"The User ID {userId} is invalid");
+            }
+
+            var result = await userManager.ConfirmEmailAsync(user, emailConfirmationToken);
+
+            if (result.Succeeded)
+            {
+                return Ok("Logged In");
+            }
+
+            return BadRequest(result.Errors);
         }
     }
 }

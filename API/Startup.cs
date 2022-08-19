@@ -24,10 +24,12 @@ namespace API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration) 
         {
             Configuration = configuration;
         }
+        // IConfiguration service is setup to read configuration information from all the various configuration sources (appsettings.json, appsettings.{Environment}.json, secrets.json, Environment Variables, Command-line Arguments) in asp.net core.
+        // Please note that, if you have a configuration setting with the same key in multiple configuration sources, the later configuration sources override the earlier configuration sources. 
 
         public IConfiguration Configuration { get; }
 
@@ -41,12 +43,14 @@ namespace API
             // configuring ASP.NET Core Identity
             services.AddIdentity<ApplicationUser, IdentityRole>(options => // We are using the IdentityOptions object to configure PasswordOptions.
             {
+                // We could also use this IdentityOptions object to configure: UserOptions, SignInOptions, LockoutOptions, TokenOptions, StoreOptions, ClaimsIdentityOptions.
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
-            }) 
-            .AddEntityFrameworkStores<AppDBContext>();
-            // We could also use this IdentityOptions object to configure: UserOptions, SignInOptions, LockoutOptions, TokenOptions, StoreOptions, ClaimsIdentityOptions.
+                options.SignIn.RequireConfirmedEmail = true;
+            })
+            .AddEntityFrameworkStores<AppDBContext>()
+            .AddDefaultTokenProviders(); // Adds the default token providers used to generate tokens for reset passwords, change email and change telephone number operations, and for two factor authentication token generation.
 
             services.AddControllers();
 
