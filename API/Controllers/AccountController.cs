@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Identity;
+using Service.Contracts;
 using Service.ViewModels;
 using System.Threading.Tasks;
 
@@ -14,13 +13,14 @@ namespace API.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly IEmailSenderService emailSenderService;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSenderService emailSenderService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.emailSenderService = emailSenderService;
         }
 
-        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromForm]RegisterViewModel model)
         {
@@ -40,6 +40,9 @@ namespace API.Controllers
                 var emailConfirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
                 var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, emailConfirmationToken = emailConfirmationToken }, Request.Scheme);
+                // The last parameter Request.Scheme returns the request protocol such as Http or Https. This parameter is required to generate the full absolute URL. If this parameter is not specified, a relative URL will be generated.
+
+                string emailStatus = await emailSenderService.SendEmailAsync(user.Email, user.UserName, confirmationLink);
 
                 // But If the user is signed in and in the Admin role, then it is the Admin user that is creating a new user. So redirecting the Admin user to ListUsers action method in Administrator controller.
                 // 'User' contains ClaimsPrincipal of the current user of the application.
@@ -48,17 +51,12 @@ namespace API.Controllers
                     return RedirectToAction("ListUsers", "Administrator");
                 }
 
-                await signInManager.SignInAsync(user, isPersistent: false);
-                // isPersistent is used to specify whether we want to create session cookie or persistent cookie.
-                // Here we are creating a session cookie (A session cookie is immediately lost when we close the browser window (Note: When all windows of a browser will be closed)).
-
-                return Ok("Registered & Logged In");
+                return Ok("Registered successfully & now Confirm your Email to Login");
             }
             
             return BadRequest(result.Errors);
         }
 
-        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromForm]LoginViewModel model)
         {
@@ -85,7 +83,6 @@ namespace API.Controllers
             return Ok("You have been Logged Out!!");
         }
 
-        [AllowAnonymous]
         [HttpGet("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string emailConfirmationToken)
         {
@@ -101,11 +98,15 @@ namespace API.Controllers
                 return BadRequest($"The User ID {userId} is invalid");
             }
 
-            var result = await userManager.ConfirmEmailAsync(user, emailConfirmationToken);
+            var result = await userManager.ConfirmEmailAsync(user, emailConfirmationToken); // This method sets EmailConfirmed column to True in AspNetUsers table.
 
             if (result.Succeeded)
             {
-                return Ok("Logged In");
+                await signInManager.SignInAsync(user, isPersistent: false);
+                // isPersistent is used to specify whether we want to create session cookie or persistent cookie.
+                // Here we are creating a session cookie (A session cookie is immediately lost when we close the browser window (Note: When all windows of a browser will be closed)).
+
+                return Ok("Your Email is confirmed & you have been Logged In");
             }
 
             return BadRequest(result.Errors);

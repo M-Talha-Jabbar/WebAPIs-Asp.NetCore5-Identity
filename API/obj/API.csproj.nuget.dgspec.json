@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WebAPIs-Asp.NetCore5-Identity\\API\\API.csproj": {}
+    "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\API\\API.csproj": {}
   },
   "projects": {
-    "D:\\WebAPIs-Asp.NetCore5-Identity\\API\\API.csproj": {
+    "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WebAPIs-Asp.NetCore5-Identity\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\WebAPIs-Asp.NetCore5-Identity\\API\\API.csproj",
-        "packagesPath": "C:\\Users\\talha.jabbar\\.nuget\\packages\\",
-        "outputPath": "D:\\WebAPIs-Asp.NetCore5-Identity\\API\\obj\\",
+        "projectPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\Huzaifa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\talha.jabbar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Huzaifa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj": {
-                "projectPath": "D:\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj"
+              "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj": {
+                "projectPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj"
               }
             }
           }
@@ -73,21 +73,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.410\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj": {
+    "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj",
+        "projectUniqueName": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "D:\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\talha.jabbar\\.nuget\\packages\\",
-        "outputPath": "D:\\WebAPIs-Asp.NetCore5-Identity\\Repository\\obj\\",
+        "projectPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\Huzaifa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\talha.jabbar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Huzaifa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -143,21 +143,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.410\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj": {
+    "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj",
+        "projectUniqueName": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj",
         "projectName": "Service",
-        "projectPath": "D:\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj",
-        "packagesPath": "C:\\Users\\talha.jabbar\\.nuget\\packages\\",
-        "outputPath": "D:\\WebAPIs-Asp.NetCore5-Identity\\Service\\obj\\",
+        "projectPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Service\\Service.csproj",
+        "packagesPath": "C:\\Users\\Huzaifa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Service\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\talha.jabbar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Huzaifa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -171,8 +171,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj": {
-                "projectPath": "D:\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj"
+              "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-Asp.NetCore5-Identity\\Repository\\Repository.csproj"
               }
             }
           }
@@ -186,6 +186,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -201,7 +207,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.410\\RuntimeIdentifierGraph.json"
         }
       }
     }

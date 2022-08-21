@@ -13,8 +13,7 @@ namespace Repository.Identity
         {
             new Claim("Create Role", "Create Role"),
             new Claim("Edit Role", "Edit Role"),
-            new Claim("Delete Role", "DeleteRole"),
-            new Claim("Assign Role", "Assign Role")
+            new Claim("Delete Role", "DeleteRole")
         };
     }
 }

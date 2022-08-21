@@ -1,6 +1,4 @@
-﻿using API.Authorization.Requirements;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Identity;
@@ -18,14 +16,14 @@ namespace API.Controllers
     public class AdministratorController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly IAuthorizationService authorizationService;
 
-        public AdministratorController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IAuthorizationService authorizationService)
+        public AdministratorController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
-            this.authorizationService = authorizationService;
+            this.signInManager = signInManager;
         }
 
         [HttpGet("Role")]
@@ -80,7 +78,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "DeleteRolePolicy")]
         [HttpDelete("Role")]
-        public async Task<IActionResult> DeleteRole([Required][FromForm]CreateDeleteRoleViewModel model)
+        public async Task<IActionResult> DeleteRole([FromForm]CreateDeleteRoleViewModel model)
         {
             var role = await roleManager.FindByNameAsync(model.RoleName);
 
@@ -195,13 +193,19 @@ namespace API.Controllers
 
                 if (result.Succeeded)
                 {
+                    // If logged-in user have added new claims to himself, then refresh his sign-in cookie.
+                    if(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value.Equals(model.UserName))
+                    {
+                        await signInManager.RefreshSignInAsync(user);
+                    }
+
                     return Ok("Claims added");
                 }
 
                 return BadRequest(result.Errors);
             }
 
-            return BadRequest($"User {user.UserName} doesn't exist");
+            return BadRequest($"User {model.UserName} doesn't exist");
         }
 
         [HttpGet("User")]
